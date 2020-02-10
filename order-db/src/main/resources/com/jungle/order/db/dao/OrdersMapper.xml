@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jungle.order.db.dao.OrdersMapper">
+  <resultMap id="BaseResultMap" type="com.jungle.order.db.pojo.Orders">
+    <constructor>
+      <idArg column="shop_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="order_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="total_fee" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="package_fee" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="food_fee" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="eat_way" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="pick_up_code" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="template_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    shop_id, order_id, user_id, total_fee, package_fee, food_fee, status, eat_way, pick_up_code, 
+    template_id, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.jungle.order.db.pojo.OrdersKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where shop_id = #{shopId,jdbcType=INTEGER}
+      and order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.jungle.order.db.pojo.OrdersKey">
+    delete from orders
+    where shop_id = #{shopId,jdbcType=INTEGER}
+      and order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jungle.order.db.pojo.Orders">
+    insert into orders (shop_id, order_id, user_id, 
+      total_fee, package_fee, food_fee, 
+      status, eat_way, pick_up_code, 
+      template_id, create_time, update_time
+      )
+    values (#{shopId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{totalFee,jdbcType=DECIMAL}, #{packageFee,jdbcType=DECIMAL}, #{foodFee,jdbcType=DECIMAL}, 
+      #{status,jdbcType=TINYINT}, #{eatWay,jdbcType=TINYINT}, #{pickUpCode,jdbcType=INTEGER}, 
+      #{templateId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jungle.order.db.pojo.Orders">
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="totalFee != null">
+        total_fee,
+      </if>
+      <if test="packageFee != null">
+        package_fee,
+      </if>
+      <if test="foodFee != null">
+        food_fee,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="eatWay != null">
+        eat_way,
+      </if>
+      <if test="pickUpCode != null">
+        pick_up_code,
+      </if>
+      <if test="templateId != null">
+        template_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="totalFee != null">
+        #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="packageFee != null">
+        #{packageFee,jdbcType=DECIMAL},
+      </if>
+      <if test="foodFee != null">
+        #{foodFee,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="eatWay != null">
+        #{eatWay,jdbcType=TINYINT},
+      </if>
+      <if test="pickUpCode != null">
+        #{pickUpCode,jdbcType=INTEGER},
+      </if>
+      <if test="templateId != null">
+        #{templateId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jungle.order.db.pojo.Orders">
+    update orders
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="totalFee != null">
+        total_fee = #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="packageFee != null">
+        package_fee = #{packageFee,jdbcType=DECIMAL},
+      </if>
+      <if test="foodFee != null">
+        food_fee = #{foodFee,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="eatWay != null">
+        eat_way = #{eatWay,jdbcType=TINYINT},
+      </if>
+      <if test="pickUpCode != null">
+        pick_up_code = #{pickUpCode,jdbcType=INTEGER},
+      </if>
+      <if test="templateId != null">
+        template_id = #{templateId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=INTEGER}
+      and order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jungle.order.db.pojo.Orders">
+    update orders
+    set user_id = #{userId,jdbcType=INTEGER},
+      total_fee = #{totalFee,jdbcType=DECIMAL},
+      package_fee = #{packageFee,jdbcType=DECIMAL},
+      food_fee = #{foodFee,jdbcType=DECIMAL},
+      status = #{status,jdbcType=TINYINT},
+      eat_way = #{eatWay,jdbcType=TINYINT},
+      pick_up_code = #{pickUpCode,jdbcType=INTEGER},
+      template_id = #{templateId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where shop_id = #{shopId,jdbcType=INTEGER}
+      and order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jungle.order.db.dao.OrderDetailMapper">
+  <resultMap id="BaseResultMap" type="com.jungle.order.db.pojo.OrderDetail">
+    <constructor>
+      <idArg column="order_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="amount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="food_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="food_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, price, amount, food_id, food_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_detail
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order_detail
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jungle.order.db.pojo.OrderDetail">
+    insert into order_detail (order_id, price, amount, 
+      food_id, food_name)
+    values (#{orderId,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{amount,jdbcType=INTEGER}, 
+      #{foodId,jdbcType=INTEGER}, #{foodName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jungle.order.db.pojo.OrderDetail">
+    insert into order_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="foodId != null">
+        food_id,
+      </if>
+      <if test="foodName != null">
+        food_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="foodId != null">
+        #{foodId,jdbcType=INTEGER},
+      </if>
+      <if test="foodName != null">
+        #{foodName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jungle.order.db.pojo.OrderDetail">
+    update order_detail
+    <set>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="foodId != null">
+        food_id = #{foodId,jdbcType=INTEGER},
+      </if>
+      <if test="foodName != null">
+        food_name = #{foodName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jungle.order.db.pojo.OrderDetail">
+    update order_detail
+    set price = #{price,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=INTEGER},
+      food_id = #{foodId,jdbcType=INTEGER},
+      food_name = #{foodName,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>
