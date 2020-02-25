@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jungle.order.db.dao.FoodMapper">
+  <resultMap id="BaseResultMap" type="com.jungle.order.db.pojo.Food">
+    <constructor>
+      <idArg column="shop_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="food_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="day_stock" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="food_describle" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="monthly_sale" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="picture_url" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="pack" javaType="java.lang.Byte" jdbcType="TINYINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    shop_id, food_id, name, price, day_stock, food_describle, monthly_sale, picture_url, 
+    pack
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.jungle.order.db.pojo.FoodKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from food
+    where shop_id = #{shopId,jdbcType=INTEGER}
+      and food_id = #{foodId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByShopId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from food
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.jungle.order.db.pojo.FoodKey">
+    delete from food
+    where shop_id = #{shopId,jdbcType=INTEGER}
+      and food_id = #{foodId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jungle.order.db.pojo.Food">
+    insert into food (shop_id, food_id, name, 
+      price, day_stock, food_describle, 
+      monthly_sale, picture_url, pack
+      )
+    values (#{shopId,jdbcType=INTEGER}, #{foodId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+      #{price,jdbcType=DECIMAL}, #{dayStock,jdbcType=INTEGER}, #{foodDescrible,jdbcType=VARCHAR}, 
+      #{monthlySale,jdbcType=INTEGER}, #{pictureUrl,jdbcType=VARCHAR}, #{pack,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jungle.order.db.pojo.Food">
+    insert into food
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="foodId != null">
+        food_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="dayStock != null">
+        day_stock,
+      </if>
+      <if test="foodDescrible != null">
+        food_describle,
+      </if>
+      <if test="monthlySale != null">
+        monthly_sale,
+      </if>
+      <if test="pictureUrl != null">
+        picture_url,
+      </if>
+      <if test="pack != null">
+        pack,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="foodId != null">
+        #{foodId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="dayStock != null">
+        #{dayStock,jdbcType=INTEGER},
+      </if>
+      <if test="foodDescrible != null">
+        #{foodDescrible,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlySale != null">
+        #{monthlySale,jdbcType=INTEGER},
+      </if>
+      <if test="pictureUrl != null">
+        #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="pack != null">
+        #{pack,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jungle.order.db.pojo.Food">
+    update food
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="dayStock != null">
+        day_stock = #{dayStock,jdbcType=INTEGER},
+      </if>
+      <if test="foodDescrible != null">
+        food_describle = #{foodDescrible,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlySale != null">
+        monthly_sale = #{monthlySale,jdbcType=INTEGER},
+      </if>
+      <if test="pictureUrl != null">
+        picture_url = #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="pack != null">
+        pack = #{pack,jdbcType=TINYINT},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=INTEGER}
+      and food_id = #{foodId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jungle.order.db.pojo.Food">
+    update food
+    set name = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      day_stock = #{dayStock,jdbcType=INTEGER},
+      food_describle = #{foodDescrible,jdbcType=VARCHAR},
+      monthly_sale = #{monthlySale,jdbcType=INTEGER},
+      picture_url = #{pictureUrl,jdbcType=VARCHAR},
+      pack = #{pack,jdbcType=TINYINT}
+    where shop_id = #{shopId,jdbcType=INTEGER}
+      and food_id = #{foodId,jdbcType=INTEGER}
+  </update>
+</mapper>
